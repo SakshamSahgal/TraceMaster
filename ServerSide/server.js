@@ -21,12 +21,11 @@ app.get('/', async (req, res) => {
     
     // Access user agent information from req.useragent
     const userAgentInfo = req.useragent;
-
     console.log(userAgentInfo);
 
     let template = {
         browserInfo: getBrowser(userAgentInfo.browser),
-        osInfo: getOS(userAgentInfo.os), 
+        osInfo: getOS(userAgentInfo), 
         ip : req.ip,
         deviceTypeInfo : getDeviceType(userAgentInfo),
         locationData : await getUserLocation(req.ip)
@@ -55,31 +54,25 @@ function getBrowser(browser) {
 function getOS(os) {
     
     let osInfo = {
-        name: os
+        name: os.os
     }
 
     console.log(os)
 
-    const linuxDistributions = [
-        "linux", "ubuntu", "debian", "fedora", "red hat", "suse", "gentoo", "centos",
-        "slackware", "arch", "mint", "kali", "elementary", "zorin", "manjaro",
-        "deepin", "parrot", "backtrack", "backbox", "puppy", "raspbian", "raspberry"
-      ];
-      
-      
-    if(os.toLowerCase().includes("windows"))
-        osInfo.logo = path.join("GUI","OS","Windows.png")
-    else if (linuxDistributions.some(dist => os.toLowerCase().includes(dist)))
-        osInfo.logo = path.join("GUI", "OS", "Linux.png");
-    else if(os.toLowerCase().includes("mac"))
-        osInfo.logo = path.join("GUI","OS","Mac.png")
-    else if(os.toLowerCase().includes("android"))
+    
+    if(os.isAndroid)
         osInfo.logo = path.join("GUI","OS","Android.png")
-    else if(os.toLowerCase().includes("ios"))
+    else if(os.isWindows)
+        osInfo.logo = path.join("GUI","OS","Windows.png")
+    else if(os.isLinux || os.isLinux64)
+        osInfo.logo = path.join("GUI","OS","Linux.png")
+    else if(os.isMac)
+        osInfo.logo = path.join("GUI","OS","Mac.png")
+    else if(os.isIOS)
         osInfo.logo = path.join("GUI","OS","IOS.png")
     else
-        osInfo.logo = path.join("GUI","OS","Default.png")    
-    
+        osInfo.logo = path.join("GUI","OS","Default.png")
+
     return osInfo;
 }
 
