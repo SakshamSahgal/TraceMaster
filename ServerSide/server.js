@@ -111,8 +111,11 @@ const getUserLocation = async (ip) => {
         const ipv4Address = ipAddress.split(':').pop();
         const response = await axios.get(`https://ipinfo.io/${ipv4Address}/json`);
         const locationData = response.data;
-        console.log(locationData);
+        
+        console.log(ipAddress + " " + ipv4Address);
+        console.log(locationData)
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log("req failed")
     }
 };
