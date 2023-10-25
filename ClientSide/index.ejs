@@ -7,6 +7,10 @@
   </head>
   <body>
     <%- include('./ReusableComponents/BootstrapCDN.ejs') %> <!-- Include Bootstrap CDN -->
+    
+    <link  rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/> <!-- Include Leaflet CDN -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> <!-- Include Leaflet CDN -->
+
     <div class="container mt-4">
         <div class="row">
             <!-- Card for Browser Info -->
@@ -48,9 +52,44 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Card for Geo-Location Info -->
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <%if(locationData != null){%>
+                            <p id="latitute">latitude: <%=(locationData.loc).split(',')[0]%></p>
+                            <p id="longitude">longitude: <%=(locationData.loc).split(',')[1]%></p>
+                            <div id="map" style="height: 400px;"></div>
+                        <%}else{%>
+                            <p>Unable to fetch Geo-Location from IP</p>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
     <!-- Add Bootstrap JS and jQuery links here if needed -->
 </body>
 </html>
+<script>
+
+    // Get the latitude and longitude values from the ejs file 
+    const [latitude, longitude] = [document.getElementById('latitute').value,document.getElementById('longitude').value]
+  
+    // Initialize the map
+    const map = L.map('map').setView([latitude, longitude], 13);
+  
+    // Add a tile layer (you can choose a different tile layer based on your preference)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+  
+    // Add a marker to the map at the specified location
+    L.marker([latitude, longitude]).addTo(map);
+  </script>
+  
