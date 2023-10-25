@@ -21,6 +21,7 @@ app.get('/', async (req, res) => {
     
     // Access user agent information from req.useragent
     const userAgentInfo = req.useragent;
+
     console.log(userAgentInfo);
 
     let template = {
@@ -114,8 +115,9 @@ const getUserLocation = async (ip) => {
         const response = await axios.get(`https://ipinfo.io/${ipv4Address}/json`);
         const locationData = response.data;
         console.log(locationData)
+        locationData.latitude = locationData.loc.split(',')[0];
+        locationData.longitude = locationData.loc.split(',')[1];
         return locationData;
-        
     } catch (error) {
         // console.error(error);
         console.log("req failed")

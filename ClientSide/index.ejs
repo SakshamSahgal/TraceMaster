@@ -59,15 +59,22 @@
                 <div class="card">
                     <div class="card-body">
                         <%if(locationData != null){%>
-                            <p id="latitute">latitude: <%=(locationData.loc).split(',')[0]%></p>
-                            <p id="longitude">longitude: <%=(locationData.loc).split(',')[1]%></p>
+                            <p id="latitute">latitude: <%=(locationData.latitude)%></p>
+                            <p id="longitude">longitude: <%=(locationData.longitude)%></p>
                             <div id="map" style="height: 400px;"></div>
+                            <p>City : <%=locationData.city%></p>
+                            <p>Region : <%=locationData.region%></p>
+                            <p>Country : <%=locationData.country%></p>
+                            <p>Interet Service Provider : <%=locationData.org%></p>
+                            <p>Postal Code : <%=locationData.postal%></p>
+                            <p>Timezone : <%=locationData.timezone%></p>
                         <%}else{%>
                             <p>Unable to fetch Geo-Location from IP</p>
                         <%}%>
                     </div>
                 </div>
             </div>
+            
 
 
         </div>
@@ -77,19 +84,26 @@
 </body>
 </html>
 <script>
+    function displayMap(){
+        // Get the latitude and longitude values from the ejs file 
+        if(document.getElementById('latitute') != null && document.getElementById('longitude') != null)
+        {
+            const [latitude, longitude] = [document.getElementById('latitute').value,document.getElementById('longitude').value]
+            
+            console.log(latitude, longitude)
 
-    // Get the latitude and longitude values from the ejs file 
-    const [latitude, longitude] = [document.getElementById('latitute').value,document.getElementById('longitude').value]
-  
-    // Initialize the map
-    const map = L.map('map').setView([latitude, longitude], 13);
-  
-    // Add a tile layer (you can choose a different tile layer based on your preference)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-  
-    // Add a marker to the map at the specified location
-    L.marker([latitude, longitude]).addTo(map);
+            // Initialize the map
+            const map = L.map('map').setView([latitude, longitude], 13);
+          
+            // Add a tile layer (you can choose a different tile layer based on your preference)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+          
+            // Add a marker to the map at the specified location
+            L.marker([latitude, longitude]).addTo(map);
+        }
+    }
+    displayMap();
   </script>
   
