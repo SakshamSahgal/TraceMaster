@@ -88,9 +88,9 @@
         // Get the latitude and longitude values from the ejs file 
         if(document.getElementById('latitude') != null && document.getElementById('longitude') != null)
         {
-            const [latitude, longitude] = [document.getElementById('latitude').value,document.getElementById('longitude').value]
+            const [latitude, longitude] = [document.getElementById('latitude').innerText,document.getElementById('longitude').innerText]
             
-            console.log(latitude, longitude)
+            console.log([latitude, longitude])
 
             // Initialize the map
             const map = L.map('map').setView([latitude, longitude], 13);
