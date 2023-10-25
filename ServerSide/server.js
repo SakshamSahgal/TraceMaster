@@ -7,6 +7,7 @@ const axios = require('axios');
 
 app.use(express.static(path.join(__dirname,"..","ClientSide","Static"))); //telling that my webapp will be using the files in the ClientSide/Static folder for static js files
 
+app.set('trust proxy', true); // Enable "trust proxy" to get the client's IP address through proxy headers
 
 app.set('view engine', 'ejs');      // set the view engine to ejs
 app.use(useragent.express());       // use the useragent middleware to parse useragent header
@@ -106,14 +107,16 @@ function getDeviceType(userAgentInfo) {
 }
 
 const getUserLocation = async (ip) => {
+    
+    const ipAddress = ip; //IPv6-mapped IPv4 address
+    const ipv4Address = ipAddress.split(':').pop();
+    console.log(ipAddress + " " + ipv4Address);
+ 
     try {
-        const ipAddress = ip; //IPv6-mapped IPv4 address
-        const ipv4Address = ipAddress.split(':').pop();
         const response = await axios.get(`https://ipinfo.io/${ipv4Address}/json`);
         const locationData = response.data;
-        
-        console.log(ipAddress + " " + ipv4Address);
         console.log(locationData)
+        
     } catch (error) {
         // console.error(error);
         console.log("req failed")
