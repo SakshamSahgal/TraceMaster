@@ -3,7 +3,8 @@ const app = express()
 const path = require('path')       
 const useragent = require('express-useragent');
 const fs = require('fs');
-const e = require('express');
+const axios = require('axios');
+
 app.use(express.static(path.join(__dirname,"..","ClientSide","Static"))); //telling that my webapp will be using the files in the ClientSide/Static folder for static js files
 
 
@@ -27,6 +28,8 @@ app.get('/', (req, res) => {
         ip : req.ip,
         deviceTypeInfo : getDeviceType(userAgentInfo),
     }
+    getUserLocation(req.ip)
+    
     res.render(path.join(__dirname,"..","ClientSide","index.ejs"),template)
 })
 
@@ -98,6 +101,18 @@ function getDeviceType(userAgentInfo) {
         DeviceTypeInfo.logo = path.join("GUI","DeviceType","Default.png")
     }
 
-    return DeviceTypeInfo
+    return DeviceTypeInfo;
     
 }
+
+const getUserLocation = async (ip) => {
+    try {
+        const ipAddress = ip; //IPv6-mapped IPv4 address
+        const ipv4Address = ipAddress.split(':').pop();
+        const response = await axios.get(`https://ipinfo.io/${ipv4Address}/json`);
+        const locationData = response.data;
+        console.log(locationData);
+    } catch (error) {
+        console.error(error);
+    }
+};

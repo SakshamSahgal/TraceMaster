@@ -6,28 +6,51 @@
     <title>Homepage</title>
   </head>
   <body>
+    <%- include('./ReusableComponents/BootstrapCDN.ejs') %> <!-- Include Bootstrap CDN -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Card for Browser Info -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=browserInfo.name%></h5>
+                        <img class="card-img-top" src="<%=browserInfo.logo%>" alt="Browser Logo">
+                    </div>
+                </div>
+            </div>
 
-    <div>
+            <!-- Card for OS Info -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=osInfo.name%></h5>
+                        <img class="card-img-top" src="<%=osInfo.logo%>" alt="OS Logo">
+                    </div>
+                </div>
+            </div>
 
-        <%=browserInfo.name%>
-        <img src="<%=browserInfo.logo%>" />
+            <!-- Card for IP Info -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">IP</h5>
+                        <p class="card-text"><%=ip%></p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Card for Device Type Info -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=deviceTypeInfo.name%></h5>
+                        <img class="card-img-top" src="<%=deviceTypeInfo.logo%>" alt="Device Type Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div>
-
-        <%=osInfo.name%>
-        <img src="<%=osInfo.logo%>" />
-
-    </div>
-
-    <div>
-        IP : <%=ip%>
-    </div>
-    <div>
-      Device Type : <%=deviceTypeInfo.name%>
-      <img src="<%=deviceTypeInfo.logo%>" />
-    </div>
-
-  </body>
+    <!-- Add Bootstrap JS and jQuery links here if needed -->
+</body>
 </html>
