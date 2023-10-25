@@ -59,8 +59,8 @@
                 <div class="card">
                     <div class="card-body">
                         <%if(locationData != null){%>
-                            <p id="latitute">latitude: <%=(locationData.latitude)%></p>
-                            <p id="longitude">longitude: <%=(locationData.longitude)%></p>
+                            latitude: <p id="latitude"> <%=(locationData.latitude)%></p>
+                            longitude: <p id="longitude"> <%=(locationData.longitude)%></p>
                             <div id="map" style="height: 400px;"></div>
                             <p>City : <%=locationData.city%></p>
                             <p>Region : <%=locationData.region%></p>
@@ -86,9 +86,9 @@
 <script>
     function displayMap(){
         // Get the latitude and longitude values from the ejs file 
-        if(document.getElementById('latitute') != null && document.getElementById('longitude') != null)
+        if(document.getElementById('latitude') != null && document.getElementById('longitude') != null)
         {
-            const [latitude, longitude] = [document.getElementById('latitute').value,document.getElementById('longitude').value]
+            const [latitude, longitude] = [document.getElementById('latitude').value,document.getElementById('longitude').value]
             
             console.log(latitude, longitude)
 
